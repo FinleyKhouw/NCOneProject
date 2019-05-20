@@ -13,9 +13,10 @@ class GameScene: SKScene {
     
     var smallCircle = SKShapeNode()
     var anotherSmallCircle = SKShapeNode()
+    var finishedNode = false
     
     var blueCircle = SKShapeNode(circleOfRadius: 60)
-    var yellowCircle = SKShapeNode(circleOfRadius: 60)
+    var greenCircle = SKShapeNode(circleOfRadius: 60)
     var redCircle = SKShapeNode(circleOfRadius: 60)
     
     let colorCollection: [UIColor] = [#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1), #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)]
@@ -26,22 +27,22 @@ class GameScene: SKScene {
         blueCircle.position = self.view!.center
         addChild(blueCircle)
         
-        yellowCircle.fillColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-        yellowCircle.position = CGPoint(x: 414, y: 400)
-        yellowCircle.name = "initial node"
-        addChild(yellowCircle)
+        greenCircle.fillColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        greenCircle.position = CGPoint(x: 414, y: 400)
+        greenCircle.name = "initial node"
+        addChild(greenCircle)
         
         redCircle.fillColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
         redCircle.position = CGPoint(x: 200, y: 400)
         addChild(redCircle)
         
-        self.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: self.frame.width, height: 5000))
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: self.frame.width, height: 4000))
         
         blueCircle.physicsBody = SKPhysicsBody(circleOfRadius: 60)
         blueCircle.physicsBody?.affectedByGravity = true
         
-        yellowCircle.physicsBody = SKPhysicsBody(circleOfRadius: 60)
-        yellowCircle.physicsBody?.affectedByGravity = true
+        greenCircle.physicsBody = SKPhysicsBody(circleOfRadius: 60)
+        greenCircle.physicsBody?.affectedByGravity = true
         
         redCircle.physicsBody = SKPhysicsBody(circleOfRadius: 60)
         redCircle.physicsBody?.affectedByGravity = true
@@ -62,19 +63,28 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             let fixedPosition = CGPoint(x: CGFloat(self.view!.center.x), y: (self.view!.center.y))
             
+            
+            
             let touchedNode = atPoint(location)
             if (touchedNode.name == "initial node") {
-                print("testing yo")
-                yellowCircle.position = fixedPosition
-                yellowCircle.physicsBody = nil
-                physicsWorld.gravity = CGVector(dx: 0, dy: 3)
-                
-                SKAction.wait(forDuration: 3)
-                
-                smallCircle.removeAllChildren()
-                smallCircle.removeFromParent()
-                anotherSmallCircle.removeAllChildren()
-                anotherSmallCircle.removeFromParent()
+                if finishedNode == false {
+                    greenCircle.position = fixedPosition
+                    greenCircle.physicsBody = nil
+                    physicsWorld.gravity = CGVector(dx: 0, dy: 3)
+                    
+                    SKAction.wait(forDuration: 3)
+                    
+                    smallCircle.removeAllChildren()
+                    smallCircle.removeFromParent()
+                    anotherSmallCircle.removeAllChildren()
+                    anotherSmallCircle.removeFromParent()
+                    finishedNode = true
+                } else {
+                    deleteView(deleteEveryThing: true)
+                    let reveal = SKTransition.fade(withDuration: 0.1)
+                    let sceneOne = GameSceneOne(size: self.size)
+                    self.view!.presentScene(sceneOne, transition: reveal)
+                }
             } else {
                 anotherSmallCircle = SKShapeNode(circleOfRadius: 60)
                 anotherSmallCircle.position = location
@@ -90,11 +100,30 @@ class GameScene: SKScene {
 //            let touchedNode = atPoint(location)
 //
 //
-//            if touchedNode == "yellowCircle" {
-//            yellowCircle.position = fixedPosition
+//            if touchedNode == "greenCircle" {
+//            greenCircle.position = fixedPosition
 //    }
         
     }
+    
+    func deleteView(deleteEveryThing:Bool) {
+        
+        if deleteEveryThing {
+            
+            self.removeAllActions()
+            self.removeAllChildren()
+            
+            //Scene presentation code here
+        }
+            
+        else {
+            
+            self.removeAllChildren()
+            //Scene Presentation Code here
+        }
+    }
+    
+    
 }
 
 

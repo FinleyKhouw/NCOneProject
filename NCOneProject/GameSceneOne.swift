@@ -9,8 +9,9 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
-    override func viewDidLoad() {
+class GameSceneOne: SKScene {
+    override func didMove(to view: SKView) {
+        
     }
     
     
