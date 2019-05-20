@@ -13,6 +13,7 @@
 		BEBF694D2292A09200755F5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBF694B2292A09200755F5A /* Main.storyboard */; };
 		BEBF694F2292A09300755F5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEBF694E2292A09300755F5A /* Assets.xcassets */; };
 		BEBF69522292A09300755F5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBF69502292A09300755F5A /* LaunchScreen.storyboard */; };
+		BEBF69912292E55A00755F5A /* GameSceneOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF69902292E55A00755F5A /* GameSceneOne.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		BEBF694E2292A09300755F5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEBF69512292A09300755F5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEBF69532292A09300755F5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEBF69902292E55A00755F5A /* GameSceneOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneOne.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				BEBF69412292A09200755F5A /* AppDelegate.swift */,
 				BEBF69472292A09200755F5A /* GameScene.swift */,
+				BEBF69902292E55A00755F5A /* GameSceneOne.swift */,
 				BEBF69492292A09200755F5A /* GameViewController.swift */,
 				BEBF694B2292A09200755F5A /* Main.storyboard */,
 				BEBF694E2292A09300755F5A /* Assets.xcassets */,
@@ -141,6 +144,7 @@
 				BEBF69482292A09200755F5A /* GameScene.swift in Sources */,
 				BEBF694A2292A09200755F5A /* GameViewController.swift in Sources */,
 				BEBF69422292A09200755F5A /* AppDelegate.swift in Sources */,
+				BEBF69912292E55A00755F5A /* GameSceneOne.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
