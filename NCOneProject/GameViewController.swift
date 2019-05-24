@@ -23,12 +23,7 @@ class GameViewController: UIViewController {
             
             view.showsFPS = true
             view.showsNodeCount = true
-            
-            let sceneOne = GameSceneOne(size: view.frame.size)
-            sceneOne.scaleMode = .aspectFill
         }
-        
-        
         
     }
     override var shouldAutorotate: Bool {
