@@ -57,7 +57,7 @@ class GameScene: SKScene {
             
             let touchedNode = atPoint(location)
             
-            if (touchedNode.name == "initial node") {
+            /* if (touchedNode.name == "initial node") {
                 if finishedNode == false {
                     // move yellow circle to center
                     let moveToPoint = SKAction.move(to: fixedPosition, duration: 1)
@@ -85,7 +85,7 @@ class GameScene: SKScene {
                     yellowCircle.physicsBody?.affectedByGravity = true
                     
                     self.finishedNode = nil
-                } else if doneScene == false {
+                } else */ if doneScene == false {
                     // move again and gone
                     let moveYellowCircle = SKAction.run {
                         let moveToPoint = SKAction.move(to: fixedPosition, duration: 1)
@@ -110,7 +110,7 @@ class GameScene: SKScene {
                     
                     doneScene = nil
                 }
-            } else {
+            } /* else {
                 // click to generate ball and balls
                 if finishedNode == false {
                 anotherSmallCircle = SKShapeNode(circleOfRadius: 30)
@@ -121,6 +121,6 @@ class GameScene: SKScene {
                 self.addChild(anotherSmallCircle)
                 }
         }
-    }
+    }*/
     }
 }

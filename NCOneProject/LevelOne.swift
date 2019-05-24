@@ -9,10 +9,10 @@
 import SpriteKit
 import GameplayKit
 
-let BallCategoryName = "Ball"
-let RedPadCategoryName = "RedPad"
-let BluePadCategoryName = "BluePad"
-let YellowFinishCategoryName = "YellowFinish"
+let BallName = "Ball"
+let RedPadName = "RedPad"
+let BluePadName = "BluePad"
+let YellowFinishName = "YellowFinish"
 
 struct PhysicsCategory {
     static let BallCategory    : UInt32 = 0x1 << 0
@@ -27,18 +27,21 @@ var bluePad = SKSpriteNode()
 var yellowFinish = SKSpriteNode()
 
 class LevelOne: SKScene, SKPhysicsContactDelegate {
-        var hit = 0
     
         override func didMove(to view: SKView) {
         
             self.physicsWorld.contactDelegate = self
             
-            ball = childNode(withName: BallCategoryName) as! SKSpriteNode
-            yellowFinish = childNode(withName: YellowFinishCategoryName) as! SKSpriteNode
-            bluePad = childNode(withName: BluePadCategoryName) as! SKSpriteNode
+            ball = childNode(withName: BallName) as! SKSpriteNode
+            yellowFinish = childNode(withName: YellowFinishName) as! SKSpriteNode
+            bluePad = childNode(withName: BluePadName) as! SKSpriteNode
             
-//            yellowFinish.physicsBody = SKPhysicsBody(circleOfRadius: yellowFinish.frame.width / 2)
-//            yellowFinish.physicsBody?.affectedByGravity = false
+            ball.zPosition = -1
+            yellowFinish.zPosition = 4
+            
+            yellowFinishSetting()
+            bluePadSetting()
+            ballSetting()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -46,18 +49,12 @@ class LevelOne: SKScene, SKPhysicsContactDelegate {
         for touch in touches {
             let location = touch.location(in: self)
             
+            ballSetting()
+            
             let ballStart = SKAction.run {
                 ball.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 40))
             }
             ball.run(ballStart)
-            
-            
-            
-            ball.physicsBody?.categoryBitMask = PhysicsCategory.BallCategory
-            yellowFinish.physicsBody?.categoryBitMask = PhysicsCategory.FinishCategory
-            ball.physicsBody?.contactTestBitMask = PhysicsCategory.FinishCategory
-            ball.name = "Ball"
-            ball.physicsBody?.isDynamic = true
         }
         
     }
@@ -66,8 +63,59 @@ class LevelOne: SKScene, SKPhysicsContactDelegate {
         let firstBody = contact.bodyA.node as! SKSpriteNode
         let secondBody = contact.bodyB.node as! SKSpriteNode
         
+        if ((firstBody.name == BluePadName) && (secondBody.name == BallName)) {
+            print("touched")
+            collisionPadAndBall(Pad: firstBody, Ball: secondBody)
+        } else if ((firstBody.name == BallName) && (secondBody.name == BluePadName)) {
+            print("touched1")
+            collisionPadAndBall(Pad: secondBody, Ball: firstBody)
+        }
         
+        if ((firstBody.name == BallName) && (secondBody.name == YellowFinishName)) || ((firstBody.name == YellowFinishName) && (secondBody.name == BallName)) {
+            print("finished")
+        }
     }
     
+    func collisionPadAndBall(Pad: SKSpriteNode, Ball: SKSpriteNode) {
+        Pad.color = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
+//        Ball.physicsBody?.isDynamic = false
+        
+        Pad.removeAllActions()
+    }
     
+    func bluePadSetting() {
+        bluePad.physicsBody = SKPhysicsBody(rectangleOf: bluePad.size)
+        bluePad.physicsBody?.categoryBitMask = PhysicsCategory.PadCategory
+        bluePad.physicsBody?.collisionBitMask = PhysicsCategory.BallCategory
+        bluePad.physicsBody?.contactTestBitMask = PhysicsCategory.BallCategory
+        bluePad.name = BluePadName
+//        bluePad.physicsBody?.restitution = 0
+//        bluePad.physicsBody?.friction = 0
+        bluePad.physicsBody?.isDynamic = false
+        bluePad.physicsBody?.affectedByGravity = false
+    }
+    
+    func yellowFinishSetting() {
+        yellowFinish.physicsBody?.categoryBitMask = PhysicsCategory.FinishCategory
+        yellowFinish.physicsBody?.contactTestBitMask = PhysicsCategory.BallCategory
+        yellowFinish.zPosition = 1
+        yellowFinish.name = YellowFinishName
+        yellowFinish.physicsBody = SKPhysicsBody(circleOfRadius: yellowFinish.frame.width / 2)
+        yellowFinish.physicsBody?.affectedByGravity = false
+        yellowFinish.physicsBody?.isDynamic = false
+    }
+    
+    func ballSetting() {
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2)
+        ball.physicsBody?.categoryBitMask = PhysicsCategory.BallCategory
+        ball.physicsBody?.collisionBitMask = PhysicsCategory.PadCategory
+        ball.physicsBody?.contactTestBitMask = PhysicsCategory.PadCategory | PhysicsCategory.FinishCategory
+        ball.name = "Ball"
+        ball.zPosition = -1
+        ball.physicsBody?.isDynamic = true
+        ball.physicsBody?.affectedByGravity = false
+        ball.physicsBody?.allowsRotation = false
+        ball.physicsBody?.restitution = 1
+        ball.physicsBody?.friction = 0
+    }
 }
