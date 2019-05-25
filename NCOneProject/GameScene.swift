@@ -9,9 +9,19 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+var BallName = "Ball"
+var YellowFinishName = "FinishLine"
 
-    
+var ball = SKSpriteNode()
+var yellowFinish = SKSpriteNode()
+
+struct PhysicsCategory {
+    static let BallCategory    : UInt32 = 0x1 << 0
+    static let PadCategory     : UInt32 = 0x1 << 1
+    static let FinishCategory  : UInt32 = 0x1 << 2
+}
+
+class GameScene: SKScene {
     var smallCircle = SKShapeNode()
     var anotherSmallCircle = SKShapeNode()
     var finishedNode: Bool? = false
